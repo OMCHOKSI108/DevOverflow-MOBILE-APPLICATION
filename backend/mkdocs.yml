@@ -46,6 +46,7 @@ nav:
   - Mobile App Integration: mobile-developer-integration-guide.md
   - Authentication: authentication.md
   - API Reference:
+      - Complete API Summary: API_REFERENCE_COMPLETE.md
       - Users: api/users.md
       - Questions: api/questions.md
       - Answers: api/answers.md
@@ -60,6 +61,9 @@ nav:
       - AI Features: api/ai.md
       - Admin: api/admin.md
       - Upload: api/upload.md
+  - Testing:
+      - Postman Collections: POSTMAN_TESTING_GUIDE.md
+      - Postman Guidelines: POSTMAN_GUIDELINES.md
   - Data Models: data-models.md
   - Error Handling: error-handling.md
   - Deployment: deployment.md

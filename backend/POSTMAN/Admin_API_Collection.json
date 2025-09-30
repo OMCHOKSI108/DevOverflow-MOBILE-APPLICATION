@@ -37,7 +37,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"contentType\": \"question\",\n  \"contentId\": \"question_id_here\",\n  \"reason\": \"spam\",\n  \"description\": \"This question appears to be spam content with no meaningful programming question\",\n  \"category\": \"content_violation\"\n}"
+                            "raw": "{\n  \"contentId\": \"question_id_here\",\n  \"contentType\": \"question\",\n  \"reason\": \"This question appears to be spam content with no meaningful programming question\"\n}"
                         },
                         "url": {
                             "raw": "{{base_url}}/admin/reports",
@@ -99,7 +99,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"resolution\": \"resolved\",\n  \"action\": \"content_removed\",\n  \"adminNotes\": \"Content violated community guidelines and has been removed\"\n}"
+                            "raw": "{\n  \"action\": \"delete\"\n}"
                         },
                         "url": {
                             "raw": "{{base_url}}/admin/reports/:reportId/resolve",
@@ -191,7 +191,7 @@
                     }
                 },
                 {
-                    "name": "Manage User (Suspend/Ban/Activate)",
+                    "name": "Promote User to Admin",
                     "request": {
                         "method": "PUT",
                         "header": [
@@ -206,7 +206,255 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"action\": \"suspend\",\n  \"reason\": \"Violation of community guidelines\",\n  \"duration\": \"7d\",\n  \"adminNotes\": \"User posted inappropriate content multiple times\"\n}"
+                            "raw": "{\n  \"action\": \"promote\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/admin/users/:userId",
+                            "host": ["{{base_url}}"],
+                            "path": ["admin", "users", ":userId"],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": "user_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Demote User from Admin",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"action\": \"demote\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/admin/users/:userId",
+                            "host": ["{{base_url}}"],
+                            "path": ["admin", "users", ":userId"],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": "user_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Verify User",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"action\": \"verify\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/admin/users/:userId",
+                            "host": ["{{base_url}}"],
+                            "path": ["admin", "users", ":userId"],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": "user_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Unverify User",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"action\": \"unverify\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/admin/users/:userId",
+                            "host": ["{{base_url}}"],
+                            "path": ["admin", "users", ":userId"],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": "user_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Ban User",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"action\": \"ban\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/admin/users/:userId",
+                            "host": ["{{base_url}}"],
+                            "path": ["admin", "users", ":userId"],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": "user_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Unban User",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"action\": \"unban\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/admin/users/:userId",
+                            "host": ["{{base_url}}"],
+                            "path": ["admin", "users", ":userId"],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": "user_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Suspend User",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"action\": \"suspend\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/admin/users/:userId",
+                            "host": ["{{base_url}}"],
+                            "path": ["admin", "users", ":userId"],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": "user_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Unsuspend User",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"action\": \"unsuspend\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/admin/users/:userId",
+                            "host": ["{{base_url}}"],
+                            "path": ["admin", "users", ":userId"],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": "user_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Reset User Password",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"action\": \"reset_password\"\n}"
                         },
                         "url": {
                             "raw": "{{base_url}}/admin/users/:userId",
@@ -260,7 +508,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"name\": \"Updated Name\",\n  \"email\": \"updated@email.com\",\n  \"role\": \"moderator\",\n  \"reputation\": 1500,\n  \"isVerified\": true,\n  \"adminNotes\": \"Promoted to moderator due to excellent contributions\"\n}"
+                            "raw": "{\n  \"username\": \"updated_username\",\n  \"email\": \"updated@email.com\",\n  \"fullName\": \"Updated Full Name\",\n  \"bio\": \"Updated bio\",\n  \"location\": \"New Location\",\n  \"website\": \"https://newwebsite.com\",\n  \"reputation\": 1500,\n  \"isVerified\": true,\n  \"isAdmin\": false\n}"
                         },
                         "url": {
                             "raw": "{{base_url}}/admin/users/:userId/details",
@@ -337,7 +585,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"title\": \"[EDITED] Corrected Question Title\",\n  \"body\": \"Updated question body with proper formatting and clear requirements\",\n  \"tags\": [\"javascript\", \"react\", \"hooks\"],\n  \"adminEdit\": true,\n  \"editReason\": \"Improved clarity and formatting\"\n}"
+                            "raw": "{\n  \"title\": \"[EDITED] Corrected Question Title\",\n  \"content\": \"Updated question content with proper formatting and clear requirements\",\n  \"tags\": [\"javascript\", \"react\", \"hooks\"],\n  \"status\": \"active\"\n}"
                         },
                         "url": {
                             "raw": "{{base_url}}/admin/questions/:questionId",
@@ -408,7 +656,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"body\": \"Updated answer with corrected code examples and better explanations\",\n  \"adminEdit\": true,\n  \"editReason\": \"Fixed code syntax and improved clarity\"\n}"
+                            "raw": "{\n  \"content\": \"Updated answer with corrected code examples and better explanations\",\n  \"isAccepted\": true\n}"
                         },
                         "url": {
                             "raw": "{{base_url}}/admin/answers/:answerId",
@@ -475,7 +723,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"body\": \"[ADMIN NOTE] This content has been reviewed and approved by moderation team\",\n  \"targetType\": \"question\",\n  \"targetId\": \"question_id_here\",\n  \"isAdminComment\": true\n}"
+                            "raw": "{\n  \"content\": \"[ADMIN NOTE] This content has been reviewed and approved by moderation team\",\n  \"contentType\": \"question\",\n  \"contentId\": \"question_id_here\"\n}"
                         },
                         "url": {
                             "raw": "{{base_url}}/admin/comments",
@@ -500,7 +748,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"body\": \"[EDITED] Updated comment with appropriate language and content\",\n  \"adminEdit\": true,\n  \"editReason\": \"Removed inappropriate language\"\n}"
+                            "raw": "{\n  \"content\": \"[EDITED] Updated comment with appropriate language and content\"\n}"
                         },
                         "url": {
                             "raw": "{{base_url}}/admin/comments/:commentId",
