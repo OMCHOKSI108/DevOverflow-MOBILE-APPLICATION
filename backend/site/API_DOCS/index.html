@@ -259,11 +259,31 @@
     
     
       <li class="md-tabs__item">
-        <a href="../api/users/" class="md-tabs__link">
+        <a href="../API_REFERENCE_COMPLETE/" class="md-tabs__link">
           
   
   
   API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../POSTMAN_TESTING_GUIDE/" class="md-tabs__link">
+          
+  
+  
+  Testing
 
         </a>
       </li>
@@ -512,6 +532,29 @@
             API Reference
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../API_REFERENCE_COMPLETE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Complete API Summary
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -848,6 +891,102 @@
   
   
   
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Testing
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Testing
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../POSTMAN_TESTING_GUIDE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Postman Collections
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../POSTMAN_GUIDELINES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Postman Guidelines
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../data-models/" class="md-nav__link">
         
@@ -947,69 +1086,827 @@
 
 
 <h1 id="api-documentation">API Documentation<a class="headerlink" href="#api-documentation" title="Permanent link">&para;</a></h1>
-<h2 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h2>
-<p>All protected endpoints require a JWT token in the Authorization header:
+<p>All protected endpoints require a JWT token in the Authorization header:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Authorization: Bearer &lt;your-jwt-token&gt;
-</code></pre></div></p>
-<h3 id="1-authentication-endpoints">1. Authentication Endpoints<a class="headerlink" href="#1-authentication-endpoints" title="Permanent link">&para;</a></h3>
-<h4 id="user-registration">User Registration<a class="headerlink" href="#user-registration" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="err">POST /api/auth/register</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="err">Content-Type: application/json</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="err">{</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="err">    &quot;username&quot;: &quot;johndoe&quot;,</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="err">    &quot;email&quot;: &quot;john@example.com&quot;,</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="err">    &quot;password&quot;: &quot;SecurePassword123!&quot;</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="err">}</span>
 </code></pre></div>
-<h4 id="user-login">User Login<a class="headerlink" href="#user-login" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="err">POST /api/auth/login</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="err">Content-Type: application/json</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="err">{</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="err">    &quot;email&quot;: &quot;john@example.com&quot;,</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="err">    &quot;password&quot;: &quot;SecurePassword123!&quot;</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="err">}</span>
-</code></pre></div>
-<h4 id="password-reset-flow">Password Reset Flow<a class="headerlink" href="#password-reset-flow" title="Permanent link">&para;</a></h4>
-<h5 id="request-reset">Request Reset<a class="headerlink" href="#request-reset" title="Permanent link">&para;</a></h5>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="err">POST /api/auth/forgot-password</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="err">Content-Type: application/json</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="err">{</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="err">    &quot;email&quot;: &quot;john@example.com&quot;</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="err">}</span>
-</code></pre></div>
-<p>Response:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">{</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="nt">&quot;success&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;If a user with this email exists, a password reset link will be sent.&quot;</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="p">}</span>
-</code></pre></div></p>
-<h5 id="reset-password">Reset Password<a class="headerlink" href="#reset-password" title="Permanent link">&para;</a></h5>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="err">POST /api/auth/reset-password</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="err">Content-Type: application/json</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="err">{</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="err">    &quot;token&quot;: &quot;reset_token_from_email&quot;,</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="err">    &quot;newPassword&quot;: &quot;NewSecurePassword123!&quot;</span>
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="err">}</span>
-</code></pre></div>
-<p>Response:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="nt">&quot;success&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Password has been reset successfully&quot;</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="p">}</span>
-</code></pre></div></p>
-<h5 id="security-notes">Security Notes<a class="headerlink" href="#security-notes" title="Permanent link">&para;</a></h5>
+<p>This document lists the backend API endpoints available in the project and includes example requests and notes. Example values use neutral placeholders like <code>alice</code> and <code>alice@example.com</code>.</p>
+<hr />
+<h2 id="authentication-apiauth">Authentication (/api/auth)<a class="headerlink" href="#authentication-apiauth" title="Permanent link">&para;</a></h2>
+<p>Public endpoints:</p>
 <ul>
-<li>Rate limited to 3 attempts per hour</li>
-<li>Tokens expire after 1 hour</li>
-<li>Password must meet security requirements:</li>
-<li>Minimum 8 characters</li>
-<li>Contains uppercase, lowercase, number, special character</li>
+<li>POST /api/auth/register<ul>
+<li>Create a new user account.</li>
+<li>Body (JSON):</li>
 </ul>
-<p>For detailed information about the password reset system, see <a href="./docs/PASSWORD_RESET.md">Password Reset Documentation</a>.</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;alice&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;alice@example.com&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="nt">&quot;password&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SecurePassword123!&quot;</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="p">}</span>
+</code></pre></div>
+<ul>
+<li>POST /api/auth/login<ul>
+<li>Authenticate and return a JWT.</li>
+<li>Body (JSON):</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;alice@example.com&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">&quot;password&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SecurePassword123!&quot;</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="p">}</span>
+</code></pre></div>
+<ul>
+<li>
+<p>GET /api/auth/verify/:token</p>
+<ul>
+<li>Verify a user's email using the token sent by email.</li>
+</ul>
+</li>
+<li>
+<p>POST /api/auth/resend-verification</p>
+<ul>
+<li>Resend verification email. Body: { "email": "alice@example.com" }</li>
+</ul>
+</li>
+<li>
+<p>POST /api/auth/test-email</p>
+<ul>
+<li>Internal/test endpoint to verify email sending (development).</li>
+</ul>
+</li>
+<li>
+<p>POST /api/auth/register-admin and POST /api/auth/setup-admin</p>
+<ul>
+<li>Admin creation endpoints (setup/admin flows). <code>setup-admin</code> may be temporary on some deployments.</li>
+</ul>
+</li>
+</ul>
+<p>Password reset flow:</p>
+<ul>
+<li>
+<p>POST /api/auth/forgot-password</p>
+<ul>
+<li>Request a password reset. Body: { "email": "alice@example.com" }</li>
+</ul>
+</li>
+<li>
+<p>POST /api/auth/reset-password</p>
+<ul>
+<li>Reset password using token. Body: { "token": "reset_token_from_email", "newPassword": "NewSecurePassword123!" }</li>
+</ul>
+</li>
+</ul>
+<p>Protected (require Authorization header):</p>
+<ul>
+<li>
+<p>GET /api/auth/me</p>
+<ul>
+<li>Get authenticated user's profile.</li>
+</ul>
+</li>
+<li>
+<p>PUT /api/auth/profile</p>
+<ul>
+<li>Update authenticated user's profile. Body example includes fields like <code>username</code>, <code>bio</code>, <code>avatarUrl</code>.</li>
+</ul>
+</li>
+<li>
+<p>PUT /api/auth/change-password</p>
+<ul>
+<li>Change password for authenticated user. Body: { "currentPassword": "...", "newPassword": "..." }</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="users-apiusers">Users (/api/users)<a class="headerlink" href="#users-apiusers" title="Permanent link">&para;</a></h2>
+<p>Public:</p>
+<ul>
+<li>
+<p>GET /api/users/leaderboard</p>
+<ul>
+<li>Get leaderboard of top users.</li>
+</ul>
+</li>
+<li>
+<p>GET /api/users/search?query=alice</p>
+<ul>
+<li>Search users by name/email/handle.</li>
+</ul>
+</li>
+</ul>
+<p>Protected:</p>
+<ul>
+<li>
+<p>GET /api/users/me</p>
+<ul>
+<li>Get current user's full profile.</li>
+</ul>
+</li>
+<li>
+<p>PUT /api/users/profile</p>
+<ul>
+<li>Update current user's profile. Body: { "username": "alice", "bio": "..." }</li>
+</ul>
+</li>
+<li>
+<p>GET /api/users</p>
+<ul>
+<li>Get list of users (used for search/friends discovery).</li>
+</ul>
+</li>
+</ul>
+<p>Friends / connections:</p>
+<ul>
+<li>
+<p>GET /api/users/friends</p>
+<ul>
+<li>Get current user's friends list.</li>
+</ul>
+</li>
+<li>
+<p>POST /api/users/friends/:userId</p>
+<ul>
+<li>Send friend request / add friend.</li>
+</ul>
+</li>
+<li>
+<p>DELETE /api/users/friends/:userId</p>
+<ul>
+<li>Remove friend.</li>
+</ul>
+</li>
+</ul>
+<p>Notifications &amp; settings:</p>
+<ul>
+<li>
+<p>GET /api/users/notifications</p>
+<ul>
+<li>Get current user's notifications.</li>
+</ul>
+</li>
+<li>
+<p>PUT /api/users/notifications/read-all</p>
+<ul>
+<li>Mark all notifications as read.</li>
+</ul>
+</li>
+<li>
+<p>PUT /api/users/notifications/:id/read</p>
+<ul>
+<li>Mark a single notification as read.</li>
+</ul>
+</li>
+<li>
+<p>GET /api/users/settings</p>
+<ul>
+<li>Get user settings.</li>
+</ul>
+</li>
+<li>
+<p>PUT /api/users/settings</p>
+<ul>
+<li>Update user settings.</li>
+</ul>
+</li>
+</ul>
+<p>User discovery and profiles:</p>
+<ul>
+<li>
+<p>GET /api/users/suggestions</p>
+<ul>
+<li>Get suggested users to follow.</li>
+</ul>
+</li>
+<li>
+<p>GET /api/users/:id/reputation</p>
+<ul>
+<li>Get a user's reputation score.</li>
+</ul>
+</li>
+<li>
+<p>GET /api/users/:id/summary</p>
+<ul>
+<li>Get a short profile summary.</li>
+</ul>
+</li>
+<li>
+<p>GET /api/users/:id/activity</p>
+<ul>
+<li>Get public activity feed for user.</li>
+</ul>
+</li>
+<li>
+<p>GET /api/users/:id/following</p>
+<ul>
+<li>Users that :id is following.</li>
+</ul>
+</li>
+<li>
+<p>GET /api/users/:id/followers</p>
+<ul>
+<li>Users that follow :id.</li>
+</ul>
+</li>
+<li>
+<p>GET /api/users/:id</p>
+<ul>
+<li>Public user profile (must be last in route order to avoid conflicts).</li>
+</ul>
+</li>
+<li>
+<p>GET /api/users/:id/connection-status (protected)</p>
+<ul>
+<li>Check relationship (follow/friend) status against authenticated user.</li>
+</ul>
+</li>
+<li>
+<p>POST /api/users/:id/follow (protected)</p>
+<ul>
+<li>Follow a user.</li>
+</ul>
+</li>
+<li>
+<p>DELETE /api/users/:id/follow (protected)</p>
+<ul>
+<li>Unfollow a user.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="questions-apiquestions">Questions (/api/questions)<a class="headerlink" href="#questions-apiquestions" title="Permanent link">&para;</a></h2>
+<p>Public:</p>
+<ul>
+<li>
+<p>GET /api/questions</p>
+<ul>
+<li>List recent/popular questions. Supports pagination query params.</li>
+</ul>
+</li>
+<li>
+<p>GET /api/questions/search?q=error+handling</p>
+<ul>
+<li>Search questions by title/body/tags.</li>
+</ul>
+</li>
+<li>
+<p>GET /api/questions/user/:userId</p>
+<ul>
+<li>Get questions posted by a specific user.</li>
+</ul>
+</li>
+<li>
+<p>GET /api/questions/:id</p>
+<ul>
+<li>Get a specific question by ID.</li>
+</ul>
+</li>
+</ul>
+<p>Protected (require authentication):</p>
+<ul>
+<li>POST /api/questions<ul>
+<li>Create a question. Body example:</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;How to handle async errors in Node.js?&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="nt">&quot;body&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;I have several promises and want a clean error pattern...&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="nt">&quot;tags&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;nodejs&quot;</span><span class="p">,</span><span class="s2">&quot;async&quot;</span><span class="p">,</span><span class="s2">&quot;javascript&quot;</span><span class="p">]</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="p">}</span>
+</code></pre></div>
+<ul>
+<li>
+<p>PUT /api/questions/:id</p>
+<ul>
+<li>Update a question the user owns.</li>
+</ul>
+</li>
+<li>
+<p>DELETE /api/questions/:id</p>
+<ul>
+<li>Delete a question the user owns.</li>
+</ul>
+</li>
+<li>
+<p>POST /api/questions/:id/vote</p>
+<ul>
+<li>Vote on a question (up or down). Body: { "vote": 1 } or { "vote": -1 }</li>
+</ul>
+</li>
+</ul>
+<p>Answers under questions:</p>
+<ul>
+<li>POST /api/questions/:questionId/answers (protected)<ul>
+<li>Add an answer to the given question. Body example:</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">&quot;body&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;You can use try/catch with async/await...&quot;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="answers-apianswers">Answers (/api/answers)<a class="headerlink" href="#answers-apianswers" title="Permanent link">&para;</a></h2>
+<p>Public:</p>
+<ul>
+<li>
+<p>GET /api/answers/question/:questionId</p>
+<ul>
+<li>Get answers for a question.</li>
+</ul>
+</li>
+<li>
+<p>GET /api/answers/user/:userId</p>
+<ul>
+<li>Get answers by a specific user.</li>
+</ul>
+</li>
+</ul>
+<p>Protected:</p>
+<ul>
+<li>
+<p>PUT /api/answers/:id</p>
+<ul>
+<li>Edit your answer. Body: { "body": "..." }</li>
+</ul>
+</li>
+<li>
+<p>DELETE /api/answers/:id</p>
+<ul>
+<li>Delete your answer.</li>
+</ul>
+</li>
+<li>
+<p>POST /api/answers/:id/vote</p>
+<ul>
+<li>Vote on an answer. Body: { "vote": 1 }</li>
+</ul>
+</li>
+<li>
+<p>POST /api/answers/:id/accept</p>
+<ul>
+<li>Accept an answer (usually allowed for question owner).</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="comments-apicomments">Comments (/api/comments)<a class="headerlink" href="#comments-apicomments" title="Permanent link">&para;</a></h2>
+<p>Public:</p>
+<ul>
+<li>
+<p>GET /api/comments/question/:questionId</p>
+<ul>
+<li>Get comments for a question.</li>
+</ul>
+</li>
+<li>
+<p>GET /api/comments/answer/:answerId</p>
+<ul>
+<li>Get comments for an answer.</li>
+</ul>
+</li>
+</ul>
+<p>Protected:</p>
+<ul>
+<li>
+<p>POST /api/comments/question/:questionId</p>
+<ul>
+<li>Add a comment to a question. Body: { "body": "..." }</li>
+</ul>
+</li>
+<li>
+<p>POST /api/comments/answer/:answerId</p>
+<ul>
+<li>Add a comment to an answer.</li>
+</ul>
+</li>
+<li>
+<p>PUT /api/comments/:id</p>
+<ul>
+<li>Update a comment the user owns.</li>
+</ul>
+</li>
+<li>
+<p>DELETE /api/comments/:id</p>
+<ul>
+<li>Delete a comment the user owns.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="bookmarks-apibookmarks">Bookmarks (/api/bookmarks)<a class="headerlink" href="#bookmarks-apibookmarks" title="Permanent link">&para;</a></h2>
+<p>The bookmarks API supports two types of bookmarks:</p>
+<ol>
+<li><strong>External Bookmarks</strong>: Save external links/resources with title, excerpt, and tags</li>
+<li><strong>Question Bookmarks</strong>: Bookmark questions within the platform (legacy system)</li>
+</ol>
+<p>All bookmark routes are protected and require authentication.</p>
+<h3 id="external-bookmarks">External Bookmarks<a class="headerlink" href="#external-bookmarks" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>GET /api/bookmarks</p>
+<ul>
+<li>Get user's external bookmarks with pagination.</li>
+<li>Query params: <code>page</code> (default: 1), <code>limit</code> (default: 10)</li>
+</ul>
+</li>
+<li>
+<p>POST /api/bookmarks</p>
+<ul>
+<li>Create a new external bookmark.</li>
+<li>Body (JSON):</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Useful React Tutorial&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="nt">&quot;excerpt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A comprehensive guide to React hooks&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="nt">&quot;link&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://example.com/react-tutorial&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="nt">&quot;tags&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;react&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;javascript&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;tutorial&quot;</span><span class="p">],</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="nt">&quot;isPublic&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="p">}</span>
+</code></pre></div>
+<ul>
+<li>DELETE /api/bookmarks/:bookmarkId<ul>
+<li>Remove an external bookmark by its ID.</li>
+</ul>
+</li>
+</ul>
+<h3 id="question-bookmarks-legacy">Question Bookmarks (Legacy)<a class="headerlink" href="#question-bookmarks-legacy" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>POST /api/bookmarks/question/:questionId</p>
+<ul>
+<li>Add a question to user's bookmarks.</li>
+</ul>
+</li>
+<li>
+<p>DELETE /api/bookmarks/question/:questionId</p>
+<ul>
+<li>Remove a question from user's bookmarks.</li>
+</ul>
+</li>
+<li>
+<p>GET /api/bookmarks/check/:questionId</p>
+<ul>
+<li>Check if a specific question is bookmarked by the current user.</li>
+<li>Returns: <code>{ "questionId": "...", "isBookmarked": true/false }</code></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="uploads-apiupload">Uploads (/api/upload)<a class="headerlink" href="#uploads-apiupload" title="Permanent link">&para;</a></h2>
+<ul>
+<li>POST /api/upload (protected)<ul>
+<li>Upload an image/file (multer + cloudinary or local storage). Multipart/form-data.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="ai-apiai">AI (/api/ai)<a class="headerlink" href="#ai-apiai" title="Permanent link">&para;</a></h2>
+<p>Public:</p>
+<ul>
+<li>
+<p>GET /api/ai/status</p>
+<ul>
+<li>Check AI (Gemini) configuration and model status.</li>
+</ul>
+</li>
+<li>
+<p>POST /api/ai/similar-questions</p>
+<ul>
+<li>Public endpoint to get similar questions from AI; body: { "questionTitle": "...", "questionBody":"..." }</li>
+</ul>
+</li>
+</ul>
+<p>Protected:</p>
+<ul>
+<li>
+<p>POST /api/ai/answer-suggestion</p>
+<ul>
+<li>Generate an answer suggestion for a question. Body: { "questionTitle":"...","questionBody":"...","tags":[...] }</li>
+<li>Response includes <code>suggestion</code> (text) and <code>html</code> (sanitized HTML fallback).</li>
+</ul>
+</li>
+<li>
+<p>POST /api/ai/tag-suggestions</p>
+<ul>
+<li>Suggest tags for a question. Body: { "questionTitle":"...","questionBody":"..." }</li>
+</ul>
+</li>
+<li>
+<p>POST /api/ai/chatbot</p>
+<ul>
+<li>Simple chatbot endpoint. Body: { "message": "...", "context": "optional system context" }</li>
+</ul>
+</li>
+<li>
+<p>POST /api/ai/question-improvements</p>
+<ul>
+<li>Suggest improvements for a question. Body: { "questionTitle": "...", "questionBody": "..." }</li>
+</ul>
+</li>
+</ul>
+<p>Flowchart endpoints (protected):</p>
+<ul>
+<li>
+<p>POST /api/ai/flowchart</p>
+<ul>
+<li>Generate Mermaid flowchart from a prompt. Body: { "prompt": "...", "render": true, "output": "png|svg" }</li>
+</ul>
+</li>
+<li>
+<p>GET /api/ai/flowchart/:id</p>
+<ul>
+<li>Get flow metadata and mermaid code.</li>
+</ul>
+</li>
+<li>
+<p>GET /api/ai/flowchart/:id/render</p>
+<ul>
+<li>Get render status and URLs (png/svg).</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="chat-apichat">Chat (/api/chat)<a class="headerlink" href="#chat-apichat" title="Permanent link">&para;</a></h2>
+<p>All chat routes require authentication.</p>
+<ul>
+<li>
+<p>GET /api/chat/sessions</p>
+<ul>
+<li>List chat sessions for the user.</li>
+</ul>
+</li>
+<li>
+<p>POST /api/chat/sessions</p>
+<ul>
+<li>Create a new session. Body: { "title": "Session title", "initialMessage": "optional message" }</li>
+</ul>
+</li>
+<li>
+<p>GET /api/chat/sessions/:sessionId/messages</p>
+<ul>
+<li>Get messages for a session.</li>
+</ul>
+</li>
+<li>
+<p>POST /api/chat/sessions/:sessionId/messages</p>
+<ul>
+<li>Send a message in a session. Body: { "message": "..." }</li>
+</ul>
+</li>
+<li>
+<p>DELETE /api/chat/sessions/:sessionId</p>
+<ul>
+<li>Delete (soft-delete) a session.</li>
+</ul>
+</li>
+</ul>
+<p>Responses for AI messages include both <code>content</code> (raw text/markdown) and <code>html</code> (sanitized HTML) for convenience.</p>
+<hr />
+<h2 id="friends-apifriends">Friends (/api/friends)<a class="headerlink" href="#friends-apifriends" title="Permanent link">&para;</a></h2>
+<p>Protected user routes:</p>
+<ul>
+<li>
+<p>POST /api/friends/add</p>
+<ul>
+<li>Add a friend (body includes target user id or handle depending on UI).</li>
+</ul>
+</li>
+<li>
+<p>POST /api/friends/remove</p>
+<ul>
+<li>Remove a friend.</li>
+</ul>
+</li>
+<li>
+<p>GET /api/friends/profile/:id?</p>
+<ul>
+<li>Get friendship profile (own or other user's profile related to friendship).</li>
+</ul>
+</li>
+</ul>
+<p>Admin routes (protected + adminOnly):</p>
+<ul>
+<li>
+<p>GET /api/friends/admin/all</p>
+<ul>
+<li>Get all friend relationships (admin).</li>
+</ul>
+</li>
+<li>
+<p>GET /api/friends/admin/stats</p>
+<ul>
+<li>Get friend-related stats (admin).</li>
+</ul>
+</li>
+<li>
+<p>DELETE /api/friends/admin/remove</p>
+<ul>
+<li>Admin remove a friendship.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="gamification-apigamification">Gamification (/api/gamification)<a class="headerlink" href="#gamification-apigamification" title="Permanent link">&para;</a></h2>
+<p>Protected routes:</p>
+<ul>
+<li>
+<p>GET /api/gamification/reputation</p>
+<ul>
+<li>Get authenticated user's reputation details.</li>
+</ul>
+</li>
+<li>
+<p>GET /api/gamification/reputation/history</p>
+<ul>
+<li>Get reputation change history.</li>
+</ul>
+</li>
+<li>
+<p>GET /api/gamification/badges</p>
+<ul>
+<li>Get the user's badges.</li>
+</ul>
+</li>
+<li>
+<p>GET /api/gamification/privileges</p>
+<ul>
+<li>Get unlocked privileges for the user.</li>
+</ul>
+</li>
+<li>
+<p>GET /api/gamification/leaderboard</p>
+<ul>
+<li>Get gamification leaderboard.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="groups-apigroups">Groups (/api/groups)<a class="headerlink" href="#groups-apigroups" title="Permanent link">&para;</a></h2>
+<p>Protected routes:</p>
+<ul>
+<li>
+<p>GET /api/groups</p>
+<ul>
+<li>List groups the user can see or join.</li>
+</ul>
+</li>
+<li>
+<p>POST /api/groups</p>
+<ul>
+<li>Create a new group. Body: { "name": "Group name", "description": "..." }</li>
+</ul>
+</li>
+<li>
+<p>GET /api/groups/:groupId</p>
+<ul>
+<li>Get group details.</li>
+</ul>
+</li>
+<li>
+<p>POST /api/groups/:groupId/join</p>
+<ul>
+<li>Join a group.</li>
+</ul>
+</li>
+<li>
+<p>POST /api/groups/:groupId/leave</p>
+<ul>
+<li>Leave a group.</li>
+</ul>
+</li>
+<li>
+<p>POST /api/groups/:groupId/questions</p>
+<ul>
+<li>Post a question to a group.</li>
+</ul>
+</li>
+<li>
+<p>GET /api/groups/:groupId/questions</p>
+<ul>
+<li>List questions in a group.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="notifications-apinotifications">Notifications (/api/notifications)<a class="headerlink" href="#notifications-apinotifications" title="Permanent link">&para;</a></h2>
+<p>Protected routes (all under /api/notifications):</p>
+<ul>
+<li>
+<p>GET /</p>
+<ul>
+<li>Get user notifications.</li>
+</ul>
+</li>
+<li>
+<p>PUT /:id/read</p>
+<ul>
+<li>Mark a notification as read.</li>
+</ul>
+</li>
+<li>
+<p>PUT /read-all</p>
+<ul>
+<li>Mark all notifications as read.</li>
+</ul>
+</li>
+<li>
+<p>DELETE /:id</p>
+<ul>
+<li>Delete a notification.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="search-apisearch">Search (/api/search)<a class="headerlink" href="#search-apisearch" title="Permanent link">&para;</a></h2>
+<p>Protected routes (all under /api/search):</p>
+<ul>
+<li>
+<p>GET /api/search</p>
+<ul>
+<li>Advanced search for questions (query parameters control filters/sorting).</li>
+</ul>
+</li>
+<li>
+<p>GET /api/search/suggestions</p>
+<ul>
+<li>Get search suggestions and popular tags.</li>
+</ul>
+</li>
+<li>
+<p>GET /api/search/trending</p>
+<ul>
+<li>Get trending tags/topics.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="admin-apiadmin">Admin (/api/admin)<a class="headerlink" href="#admin-apiadmin" title="Permanent link">&para;</a></h2>
+<p>Protected + admin-only routes:</p>
+<ul>
+<li>
+<p>POST /api/admin/reports (protected)</p>
+<ul>
+<li>Create a new user-generated report (any authenticated user can file a report).</li>
+</ul>
+</li>
+<li>
+<p>GET /api/admin/reports</p>
+<ul>
+<li>Admin: list reports.</li>
+</ul>
+</li>
+<li>
+<p>PUT /api/admin/reports/:id/resolve</p>
+<ul>
+<li>Admin: mark a report resolved.</li>
+</ul>
+</li>
+<li>
+<p>GET /api/admin/stats</p>
+<ul>
+<li>Admin: site statistics.</li>
+</ul>
+</li>
+<li>
+<p>DELETE /api/admin/content/:type/:id</p>
+<ul>
+<li>Admin: remove content (question/answer/comment) by id.</li>
+</ul>
+</li>
+<li>
+<p>User management (admin):</p>
+<ul>
+<li>PUT /api/admin/users/:id — manage user (ban/unban, roles).</li>
+<li>GET /api/admin/users — list users.</li>
+<li>DELETE /api/admin/users/:id — delete user.</li>
+<li>PUT /api/admin/users/:id/details — update user details.</li>
+</ul>
+</li>
+</ul>
+<p>Content moderation (admin):</p>
+<ul>
+<li>GET /api/admin/questions</li>
+<li>PUT /api/admin/questions/:id</li>
+<li>GET /api/admin/answers</li>
+<li>PUT /api/admin/answers/:id</li>
+<li>GET /api/admin/comments</li>
+<li>POST /api/admin/comments</li>
+<li>PUT /api/admin/comments/:id</li>
+<li>DELETE /api/admin/comments/:id</li>
+</ul>
+<hr />
+<h2 id="notes-best-practices">Notes &amp; Best Practices<a class="headerlink" href="#notes-best-practices" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Rate limiting and other protections are enabled on sensitive endpoints (password reset, auth endpoints).</li>
+<li>Always include the <code>Authorization: Bearer &lt;token&gt;</code> header for protected endpoints.</li>
+<li>The AI endpoints return both raw <code>content</code> (which may contain Markdown) and a sanitized <code>html</code> field — prefer rendering Markdown client-side (e.g., <code>flutter_markdown</code>) or using the <code>html</code> fallback if the client cannot parse Markdown.</li>
+<li>Use realistic test accounts (e.g., <code>alice@example.com</code>) when trying the API; do not publish real user credentials.</li>
+</ul>
+<p>If you want, I can also generate a Postman collection export from the repository's existing example collection (the project already contains Postman JSON under <code>POSTMAN/</code>).</p>
 
 
 
