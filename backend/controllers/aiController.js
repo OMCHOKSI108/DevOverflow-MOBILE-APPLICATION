@@ -1,0 +1,452 @@
+import axios from 'axios';
+import crypto from 'crypto';
+import fs from 'fs';
+import path from 'path';
+import Flow from '../models/Flow.js';
+import { generateAIResponse, generateSimpleAIResponse, generateContent, getAIStatus } from '../utils/aiService.js';
+import { markdownToHtml } from '../utils/markdown.js';
+
+// @desc    Get AI service status
+// @route   GET /api/ai/status
+// @access  Public
+export const getAiStatus = (req, res) => {
+    try {
+        const aiStatus = getAIStatus();
+
+        res.status(200).json({
+            success: true,
+            status: aiStatus.configured ? 'AI operational' : 'AI not configured',
+            model: aiStatus.model,
+            configured: aiStatus.configured,
+            primaryKey: aiStatus.primaryKey,
+            backupKey: aiStatus.backupKey,
+            currentKey: aiStatus.currentKey
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error checking AI status'
+        });
+    }
+};
+
+// @desc    Get AI answer suggestion for a question
+// @route   POST /api/ai/answer-suggestion
+// @access  Private
+export const getAnswerSuggestion = async (req, res) => {
+    try {
+        const { questionTitle, questionBody, tags } = req.body;
+
+        if (!questionTitle || !questionBody) {
+            return res.status(400).json({
+                success: false,
+                message: 'Please provide question title and body'
+            });
+        }
+
+        if (!getAIStatus().configured) {
+            return res.status(503).json({
+                success: false,
+                message: 'AI service not configured'
+            });
+        }
+
+        const prompt = `
+        You are an expert programmer and technical assistant. Please provide a helpful, accurate, and well-structured answer to the following programming question:
+
+        Title: ${questionTitle}
+
+        Question: ${questionBody}
+
+        ${tags && tags.length > 0 ? `Tags: ${tags.join(', ')}` : ''}
+
+        Please provide:
+        1. A clear, step-by-step solution
+        2. Code examples if applicable (with proper syntax highlighting hints)
+        3. Best practices and common pitfalls to avoid
+        4. Additional resources or documentation links if relevant
+
+        Keep the answer concise but comprehensive, suitable for a Q&A platform.
+        `;
+
+        const response = await generateContent(prompt);
+        const aiAnswer = response.text();
+        const aiHtml = markdownToHtml(aiAnswer);
+
+        res.status(200).json({
+            success: true,
+            data: {
+                suggestion: aiAnswer,
+                html: aiHtml,
+                confidence: 'high',
+                model: getAIStatus().model
+            }
+        });
+
+    } catch (error) {
+        console.error('AI answer suggestion error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Server error generating AI answer suggestion'
+        });
+    }
+};
+
+// @desc    Get AI tag suggestions for a question
+// @route   POST /api/ai/tag-suggestions
+// @access  Private
+export const getTagSuggestions = async (req, res) => {
+    try {
+        const { questionTitle, questionBody } = req.body;
+
+        if (!questionTitle || !questionBody) {
+            return res.status(400).json({
+                success: false,
+                message: 'Please provide question title and body'
+            });
+        }
+
+        if (!getAIStatus().configured) {
+            return res.status(503).json({
+                success: false,
+                message: 'AI service not configured'
+            });
+        }
+
+
+        const prompt = `
+        Based on the following programming question, suggest 3-5 relevant tags that would help categorize this question:
+
+        Title: ${questionTitle}
+        Question: ${questionBody}
+
+        Please provide only the tag names, separated by commas. Focus on:
+        - Programming languages (javascript, python, java, etc.)
+        - Frameworks and libraries (react, express, django, etc.)
+        - Technologies (mongodb, sql, api, etc.)
+        - General topics (debugging, performance, security, etc.)
+
+        Example format: javascript, react, debugging, api, frontend
+        
+        Tags:
+        `;
+
+        const response = await generateContent(prompt);
+        const aiResponse = response.text();
+        const aiHtml = markdownToHtml(aiResponse);
+
+        // Parse the response to extract tags
+        const suggestedTags = aiResponse
+            .replace('Tags:', '')
+            .trim()
+            .split(',')
+            .map(tag => tag.trim().toLowerCase())
+            .filter(tag => tag.length > 0)
+            .slice(0, 5); // Limit to 5 tags
+
+        res.status(200).json({
+            success: true,
+            data: {
+                suggestedTags,
+                html: aiHtml,
+                model: getAIStatus().model
+            }
+        });
+
+    } catch (error) {
+        console.error('AI tag suggestion error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Server error generating AI tag suggestions'
+        });
+    }
+};
+
+// @desc    AI chatbot for general programming help
+// @route   POST /api/ai/chatbot
+// @access  Private
+export const chatbot = async (req, res) => {
+    try {
+        const { message, context } = req.body;
+
+        if (!message) {
+            return res.status(400).json({
+                success: false,
+                message: 'Please provide a message'
+            });
+        }
+
+        if (!getAIStatus().configured) {
+            return res.status(503).json({
+                success: false,
+                message: 'AI service not configured'
+            });
+        }
+
+        // For backward compatibility, use simple response if no context provided
+        // In future, this endpoint should be deprecated in favor of the chat sessions
+        const aiResponse = context ?
+            await generateAIResponse(message, [{ role: 'system', content: context }]) :
+            await generateSimpleAIResponse(message);
+
+        const aiHtml = markdownToHtml(aiResponse);
+
+        res.status(200).json({
+            success: true,
+            data: {
+                response: aiResponse,
+                html: aiHtml,
+                timestamp: new Date().toISOString(),
+                model: getAIStatus().model
+            }
+        });
+
+    } catch (error) {
+        console.error('AI chatbot error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Server error processing chatbot request'
+        });
+    }
+};
+
+// @desc    Get AI suggestions for improving a question
+// @route   POST /api/ai/question-improvements
+// @access  Private
+export const getQuestionImprovements = async (req, res) => {
+    try {
+        const { questionTitle, questionBody, tags } = req.body;
+
+        if (!questionTitle || !questionBody) {
+            return res.status(400).json({
+                success: false,
+                message: 'Please provide question title and body'
+            });
+        }
+
+        if (!getAIStatus().configured) {
+            return res.status(503).json({
+                success: false,
+                message: 'AI service not configured'
+            });
+        }
+
+
+        const prompt = `
+        Please analyze the following programming question and provide suggestions for improvement:
+
+        Title: ${questionTitle}
+        Question: ${questionBody}
+        ${tags && tags.length > 0 ? `Current Tags: ${tags.join(', ')}` : ''}
+
+        Please provide feedback on:
+        1. Title clarity and specificity
+        2. Question structure and completeness
+        3. Missing information that would help answerers
+        4. Code formatting suggestions (if applicable)
+        5. Tag suggestions for better categorization
+
+        Format your response as constructive feedback that helps the user improve their question.
+        `;
+
+        const response = await generateContent(prompt);
+        const improvements = response.text();
+
+        res.status(200).json({
+            success: true,
+            data: {
+                improvements,
+                model: getAIStatus().model
+            }
+        });
+
+    } catch (error) {
+        console.error('AI question improvements error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Server error generating question improvements'
+        });
+    }
+};
+
+// @desc    Create a flowchart from prompt (Mermaid) and optionally render
+// @route   POST /api/ai/flowchart
+// @access  Private
+export const createFlowchart = async (req, res) => {
+    try {
+        const { prompt, render = true, output = 'png' } = req.body;
+
+        if (!prompt) {
+            return res.status(400).json({ success: false, message: 'Prompt is required' });
+        }
+
+        if (!process.env.GEMINI_API_KEY && !process.env.GROQ_API_KEY) {
+            return res.status(503).json({ success: false, message: 'AI service not configured' });
+        }
+
+        // Build system prompt that forces minimal, simple mermaid flowchart output
+        const systemPrompt = `You are a diagram generator that creates MINIMAL, SIMPLE Mermaid flowcharts. Keep it basic with 3-7 nodes maximum. Use only essential steps. Start with "graph TD" for top-down flow. Use simple node names (A, B, C) and short labels. Do not include markdown fences, explanation, or extra text. Focus on core logic only.`;
+
+        const fullPrompt = `${systemPrompt}\n\nUser prompt: ${prompt}`;
+        const response = await generateContent(fullPrompt);
+        let mermaid = response.text();
+
+        // sanitize: strip code fences and surrounding text, ensure minimal flowchart
+        mermaid = mermaid.replace(/```/g, '').trim();
+
+        // Validate minimal flowchart (3-8 nodes max, simple structure)
+        const lines = mermaid.split('\n').filter(line => line.trim());
+        if (lines.length > 10 || !/graph\s+(TD|TB|LR)/i.test(mermaid)) {
+            // If too complex, generate a simple fallback
+            const simpleFallback = `graph TD
+    A[Start] --> B[Process]
+    B --> C[End]`;
+            mermaid = simpleFallback;
+        }
+
+        const flowId = `flow_${crypto.randomBytes(6).toString('hex')}`;
+
+        const flow = new Flow({ id: flowId, userId: req.user._id, prompt, mermaid, status: 'pending' });
+        await flow.save();
+
+        const resultData = {
+            id: flowId,
+            mermaid,
+            markdown: `\`\`\`mermaid\n${mermaid}\n\`\`\``,
+            render: { status: 'pending' }
+        };
+
+        // If rendering requested, try Kroki (synchronous)
+        if (render) {
+            try {
+                const krokiUrl = `https://kroki.io/mermaid/${output}`;
+                const krokiResp = await axios.post(krokiUrl, mermaid, {
+                    headers: { 'Content-Type': 'text/plain' },
+                    responseType: 'arraybuffer'
+                });
+
+                const uploadsDir = path.join(process.cwd(), 'uploads', 'flows');
+                if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
+
+                const filename = `${flowId}.${output}`;
+                const filePath = path.join(uploadsDir, filename);
+                fs.writeFileSync(filePath, krokiResp.data);
+
+                const publicUrl = `${req.protocol}://${req.get('host')}/uploads/flows/${filename}`;
+
+                if (output === 'png') {
+                    flow.pngUrl = publicUrl;
+                } else if (output === 'svg') {
+                    flow.svgUrl = publicUrl;
+                }
+
+                flow.status = 'done';
+                await flow.save();
+
+                resultData.render = {
+                    status: 'done',
+                    pngUrl: flow.pngUrl || null,
+                    svgUrl: flow.svgUrl || null
+                };
+            } catch (renderErr) {
+                console.error('Rendering error:', renderErr.message || renderErr);
+                // keep status pending; client can poll render endpoint
+                resultData.render = { status: 'pending' };
+            }
+        }
+
+        res.status(201).json({ success: true, data: resultData });
+
+    } catch (error) {
+        console.error('createFlowchart error:', error);
+        res.status(500).json({ success: false, message: 'AI generation failed' });
+    }
+};
+
+// @desc    Get flowchart metadata
+// @route   GET /api/ai/flowchart/:id
+// @access  Private
+export const getFlow = async (req, res) => {
+    try {
+        const flow = await Flow.findOne({ id: req.params.id }).lean();
+        if (!flow) return res.status(404).json({ success: false, message: 'Flow not found' });
+
+        res.status(200).json({ success: true, data: flow });
+    } catch (error) {
+        console.error('getFlow error:', error);
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+};
+
+// @desc    Get render status and URLs
+// @route   GET /api/ai/flowchart/:id/render
+// @access  Private
+export const getFlowRender = async (req, res) => {
+    try {
+        const flow = await Flow.findOne({ id: req.params.id }).lean();
+        if (!flow) return res.status(404).json({ success: false, message: 'Flow not found' });
+
+        res.status(200).json({ success: true, data: { status: flow.status, pngUrl: flow.pngUrl, svgUrl: flow.svgUrl } });
+    } catch (error) {
+        console.error('getFlowRender error:', error);
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+};
+
+// @desc    Get AI-powered similar questions
+// @route   POST /api/ai/similar-questions
+// @access  Public
+export const getSimilarQuestions = async (req, res) => {
+    try {
+        const { questionTitle, questionBody } = req.body;
+
+        if (!questionTitle) {
+            return res.status(400).json({
+                success: false,
+                message: 'Please provide question title'
+            });
+        }
+
+        if (!getAIStatus().configured) {
+            return res.status(503).json({
+                success: false,
+                message: 'AI service not configured'
+            });
+        }
+
+        const prompt = `
+        Based on this programming question, generate 3-5 similar question titles that someone might ask:
+
+        Title: ${questionTitle}
+        ${questionBody ? `Description: ${questionBody}` : ''}
+
+        Please provide similar but distinct questions that are related to the same topic, technology, or problem domain.
+        Format as a simple list, one question per line.
+        `;
+
+        const response = await generateContent(prompt);
+        const aiResponse = response.text();
+
+        // Parse the response to extract similar questions
+        const similarQuestions = aiResponse
+            .split('\n')
+            .map(q => q.trim())
+            .filter(q => q.length > 0 && !q.startsWith('Similar') && !q.startsWith('Based'))
+            .slice(0, 5);
+
+        res.status(200).json({
+            success: true,
+            data: {
+                similarQuestions,
+                model: getAIStatus().model
+            }
+        });
+
+    } catch (error) {
+        console.error('AI similar questions error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Server error generating similar questions'
+        });
+    }
+};

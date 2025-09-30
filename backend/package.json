@@ -1,0 +1,46 @@
+{
+  "name": "mobile_app_backend",
+  "version": "1.0.0",
+  "description": "Backend API for Mobile Q&A Application",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "admin": "cd my-admin-panel && npm run dev",
+    "admin:install": "cd my-admin-panel && npm install",
+    "test": "node test-setup.js",
+    "test:setup": "node test-setup.js"
+  },
+  "keywords": [
+    "mobile",
+    "api",
+    "backend",
+    "nodejs",
+    "express",
+    "mongodb"
+  ],
+  "author": "Your Name",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@google/genai": "^1.21.0",
+    "@google/generative-ai": "^0.24.1",
+    "axios": "^1.12.2",
+    "bcryptjs": "^3.0.2",
+    "cloudinary": "^1.41.3",
+    "compression": "^1.7.4",
+    "dotenv": "^17.2.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^8.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "marked": "^5.0.2",
+    "sanitize-html": "^2.11.2",
+    "mongoose": "^8.17.0",
+    "multer": "^2.0.2",
+    "multer-storage-cloudinary": "^4.0.0",
+    "nodemailer": "^7.0.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  }
+}
