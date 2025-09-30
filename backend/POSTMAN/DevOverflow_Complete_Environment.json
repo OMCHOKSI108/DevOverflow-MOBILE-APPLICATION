@@ -1,0 +1,111 @@
+{
+    "id": "devoverflow-complete-env-v2",
+    "name": "DevOverflow Complete Environment",
+    "values": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:3000",
+            "description": "Base URL for the DevOverflow backend API",
+            "enabled": true
+        },
+        {
+            "key": "api_base_url",
+            "value": "http://localhost:3000/api",
+            "description": "Complete API base URL including /api path",
+            "enabled": true
+        },
+        {
+            "key": "jwt_token",
+            "value": "",
+            "description": "JWT token obtained from login/register endpoint - auto-populated by login requests",
+            "enabled": true
+        },
+        {
+            "key": "admin_email",
+            "value": "admin@devoverflow.com",
+            "description": "Default admin email for testing",
+            "enabled": true
+        },
+        {
+            "key": "admin_password",
+            "value": "admin123",
+            "description": "Default admin password for testing",
+            "enabled": true
+        },
+        {
+            "key": "test_user_email",
+            "value": "testuser@devoverflow.com",
+            "description": "Test user email for general user operations",
+            "enabled": true
+        },
+        {
+            "key": "test_user_password",
+            "value": "testpass123",
+            "description": "Test user password",
+            "enabled": true
+        },
+        {
+            "key": "sample_question_id",
+            "value": "",
+            "description": "Sample question ID for testing - populate after creating a question",
+            "enabled": true
+        },
+        {
+            "key": "sample_answer_id",
+            "value": "",
+            "description": "Sample answer ID for testing - populate after creating an answer",
+            "enabled": true
+        },
+        {
+            "key": "sample_user_id",
+            "value": "",
+            "description": "Sample user ID for testing user-related endpoints",
+            "enabled": true
+        },
+        {
+            "key": "sample_comment_id",
+            "value": "",
+            "description": "Sample comment ID for testing comment operations",
+            "enabled": true
+        },
+        {
+            "key": "sample_bookmark_id",
+            "value": "",
+            "description": "Sample bookmark ID for testing bookmark operations",
+            "enabled": true
+        },
+        {
+            "key": "sample_group_id",
+            "value": "",
+            "description": "Sample group ID for testing group operations",
+            "enabled": true
+        },
+        {
+            "key": "sample_chat_session_id",
+            "value": "",
+            "description": "Sample chat session ID for testing chat operations",
+            "enabled": true
+        },
+        {
+            "key": "sample_notification_id",
+            "value": "",
+            "description": "Sample notification ID for testing notification operations",
+            "enabled": true
+        },
+        {
+            "key": "sample_report_id",
+            "value": "",
+            "description": "Sample report ID for testing admin report operations",
+            "enabled": true
+        },
+        {
+            "key": "production_base_url",
+            "value": "https://your-production-domain.com",
+            "description": "Production API base URL - update when deploying",
+            "enabled": false
+        }
+    ],
+    "_postman_variable_scope": "environment",
+    "_postman_exported_at": "2024-01-01T00:00:00.000Z",
+    "_postman_exported_using": "Postman/10.0.0"
+}

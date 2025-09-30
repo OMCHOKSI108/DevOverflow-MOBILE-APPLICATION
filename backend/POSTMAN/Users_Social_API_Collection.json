@@ -1,0 +1,531 @@
+{
+    "info": {
+        "name": "DevOverflow - Users & Social API",
+        "_postman_id": "users-social-collection-v2",
+        "description": "Complete Users, Friends, and Social features endpoints for DevOverflow backend",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:3000/api",
+            "type": "string"
+        },
+        {
+            "key": "jwt_token",
+            "value": "",
+            "type": "string"
+        }
+    ],
+    "item": [
+        {
+            "name": "Users - Public Endpoints",
+            "item": [
+                {
+                    "name": "Get Leaderboard",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/users/leaderboard?limit=20&sortBy=reputation",
+                            "host": ["{{base_url}}"],
+                            "path": ["users", "leaderboard"],
+                            "query": [
+                                {
+                                    "key": "limit",
+                                    "value": "20",
+                                    "description": "Number of users to return"
+                                },
+                                {
+                                    "key": "sortBy",
+                                    "value": "reputation",
+                                    "description": "Sort by reputation or other criteria"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Search Users",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/users/search?q=john&limit=10",
+                            "host": ["{{base_url}}"],
+                            "path": ["users", "search"],
+                            "query": [
+                                {
+                                    "key": "q",
+                                    "value": "john",
+                                    "description": "Search query for user names"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "10",
+                                    "description": "Number of results"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get User Profile",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/users/:userId",
+                            "host": ["{{base_url}}"],
+                            "path": ["users", ":userId"],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": "user_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get User Reputation",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/users/:userId/reputation",
+                            "host": ["{{base_url}}"],
+                            "path": ["users", ":userId", "reputation"],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": "user_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get User Summary",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/users/:userId/summary",
+                            "host": ["{{base_url}}"],
+                            "path": ["users", ":userId", "summary"],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": "user_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get User Activity",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/users/:userId/activity",
+                            "host": ["{{base_url}}"],
+                            "path": ["users", ":userId", "activity"],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": "user_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get User Following",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/users/:userId/following",
+                            "host": ["{{base_url}}"],
+                            "path": ["users", ":userId", "following"],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": "user_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get User Followers",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/users/:userId/followers",
+                            "host": ["{{base_url}}"],
+                            "path": ["users", ":userId", "followers"],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": "user_id_here"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Users - Protected Current User",
+            "item": [
+                {
+                    "name": "Get My Profile",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/users/me",
+                            "host": ["{{base_url}}"],
+                            "path": ["users", "me"]
+                        }
+                    }
+                },
+                {
+                    "name": "Update My Profile",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Updated User Name\",\n  \"bio\": \"I'm a passionate developer who loves to learn and share knowledge\",\n  \"location\": \"San Francisco, CA\",\n  \"website\": \"https://mywebsite.com\",\n  \"twitter\": \"@myhandle\",\n  \"github\": \"mygithub\",\n  \"linkedin\": \"mylinkedin\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/users/profile",
+                            "host": ["{{base_url}}"],
+                            "path": ["users", "profile"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get My Settings",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/users/settings",
+                            "host": ["{{base_url}}"],
+                            "path": ["users", "settings"]
+                        }
+                    }
+                },
+                {
+                    "name": "Update My Settings",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"emailNotifications\": true,\n  \"pushNotifications\": false,\n  \"privateProfile\": false,\n  \"theme\": \"dark\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/users/settings",
+                            "host": ["{{base_url}}"],
+                            "path": ["users", "settings"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get User Suggestions",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/users/suggestions?limit=10",
+                            "host": ["{{base_url}}"],
+                            "path": ["users", "suggestions"],
+                            "query": [
+                                {
+                                    "key": "limit",
+                                    "value": "10"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Friends Management",
+            "item": [
+                {
+                    "name": "Get All Users (For Friends Search)",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/users/?search=john&limit=20",
+                            "host": ["{{base_url}}"],
+                            "path": ["users", ""],
+                            "query": [
+                                {
+                                    "key": "search",
+                                    "value": "john"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "20"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get My Friends",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/users/friends",
+                            "host": ["{{base_url}}"],
+                            "path": ["users", "friends"]
+                        }
+                    }
+                },
+                {
+                    "name": "Add Friend",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/users/friends/:userId",
+                            "host": ["{{base_url}}"],
+                            "path": ["users", "friends", ":userId"],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": "user_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Remove Friend",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/users/friends/:userId",
+                            "host": ["{{base_url}}"],
+                            "path": ["users", "friends", ":userId"],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": "user_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Follow User",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/users/:userId/follow",
+                            "host": ["{{base_url}}"],
+                            "path": ["users", ":userId", "follow"],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": "user_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Unfollow User",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/users/:userId/follow",
+                            "host": ["{{base_url}}"],
+                            "path": ["users", ":userId", "follow"],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": "user_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Connection Status",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/users/:userId/connection-status",
+                            "host": ["{{base_url}}"],
+                            "path": ["users", ":userId", "connection-status"],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": "user_id_here"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Notifications",
+            "item": [
+                {
+                    "name": "Get My Notifications",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/users/notifications?limit=20&page=1",
+                            "host": ["{{base_url}}"],
+                            "path": ["users", "notifications"],
+                            "query": [
+                                {
+                                    "key": "limit",
+                                    "value": "20"
+                                },
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Mark Notification as Read",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/users/notifications/:notificationId/read",
+                            "host": ["{{base_url}}"],
+                            "path": ["users", "notifications", ":notificationId", "read"],
+                            "variable": [
+                                {
+                                    "key": "notificationId",
+                                    "value": "notification_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Mark All Notifications as Read",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/users/notifications/read-all",
+                            "host": ["{{base_url}}"],
+                            "path": ["users", "notifications", "read-all"]
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,439 @@
+{
+    "info": {
+        "name": "DevOverflow - Search & Notifications API",
+        "_postman_id": "search-notifications-collection-v2",
+        "description": "Complete Search, Notifications, and Upload endpoints for DevOverflow backend",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:3000/api",
+            "type": "string"
+        },
+        {
+            "key": "jwt_token",
+            "value": "",
+            "type": "string"
+        }
+    ],
+    "item": [
+        {
+            "name": "Search - All Protected",
+            "item": [
+                {
+                    "name": "Advanced Search",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/search?q=react hooks&tags=react,javascript&user=john&sortBy=votes&order=desc&page=1&limit=20",
+                            "host": ["{{base_url}}"],
+                            "path": ["search"],
+                            "query": [
+                                {
+                                    "key": "q",
+                                    "value": "react hooks",
+                                    "description": "Search query for questions/answers"
+                                },
+                                {
+                                    "key": "tags",
+                                    "value": "react,javascript",
+                                    "description": "Filter by tags (comma-separated)"
+                                },
+                                {
+                                    "key": "user",
+                                    "value": "john",
+                                    "description": "Filter by username"
+                                },
+                                {
+                                    "key": "sortBy",
+                                    "value": "votes",
+                                    "description": "Sort by: votes, createdAt, answers"
+                                },
+                                {
+                                    "key": "order",
+                                    "value": "desc",
+                                    "description": "Sort order: asc, desc"
+                                },
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "Page number"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "20",
+                                    "description": "Results per page"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Search Suggestions",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/search/suggestions?q=react&limit=10",
+                            "host": ["{{base_url}}"],
+                            "path": ["search", "suggestions"],
+                            "query": [
+                                {
+                                    "key": "q",
+                                    "value": "react",
+                                    "description": "Partial search query for suggestions"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "10",
+                                    "description": "Number of suggestions"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Trending Topics",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/search/trending?limit=20&timeframe=week",
+                            "host": ["{{base_url}}"],
+                            "path": ["search", "trending"],
+                            "query": [
+                                {
+                                    "key": "limit",
+                                    "value": "20",
+                                    "description": "Number of trending topics"
+                                },
+                                {
+                                    "key": "timeframe",
+                                    "value": "week",
+                                    "description": "Timeframe: day, week, month"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Notifications - All Protected",
+            "item": [
+                {
+                    "name": "Get All Notifications",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/notifications?page=1&limit=50&filter=unread",
+                            "host": ["{{base_url}}"],
+                            "path": ["notifications"],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "Page number"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "50",
+                                    "description": "Notifications per page"
+                                },
+                                {
+                                    "key": "filter",
+                                    "value": "unread",
+                                    "description": "Filter: all, read, unread"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Mark Notification as Read",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/notifications/:notificationId/read",
+                            "host": ["{{base_url}}"],
+                            "path": ["notifications", ":notificationId", "read"],
+                            "variable": [
+                                {
+                                    "key": "notificationId",
+                                    "value": "notification_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Mark All Notifications as Read",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/notifications/read-all",
+                            "host": ["{{base_url}}"],
+                            "path": ["notifications", "read-all"]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Notification",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/notifications/:notificationId",
+                            "host": ["{{base_url}}"],
+                            "path": ["notifications", ":notificationId"],
+                            "variable": [
+                                {
+                                    "key": "notificationId",
+                                    "value": "notification_id_here"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Upload - Protected",
+            "item": [
+                {
+                    "name": "Upload File",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "file",
+                                    "type": "file",
+                                    "src": [],
+                                    "description": "File to upload (image, document, etc.)"
+                                },
+                                {
+                                    "key": "type",
+                                    "value": "avatar",
+                                    "type": "text",
+                                    "description": "Upload type: avatar, attachment, image"
+                                },
+                                {
+                                    "key": "questionId",
+                                    "value": "",
+                                    "type": "text",
+                                    "description": "Optional: Associate with question ID"
+                                },
+                                {
+                                    "key": "answerId",
+                                    "value": "",
+                                    "type": "text",
+                                    "description": "Optional: Associate with answer ID"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/upload",
+                            "host": ["{{base_url}}"],
+                            "path": ["upload"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Friends API - Alternative Routes",
+            "item": [
+                {
+                    "name": "Add Friend (Alternative Route)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"friendId\": \"user_id_here\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/friends/add",
+                            "host": ["{{base_url}}"],
+                            "path": ["friends", "add"]
+                        }
+                    }
+                },
+                {
+                    "name": "Remove Friend (Alternative Route)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"friendId\": \"user_id_here\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/friends/remove",
+                            "host": ["{{base_url}}"],
+                            "path": ["friends", "remove"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Friend Profile",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/friends/profile/:userId",
+                            "host": ["{{base_url}}"],
+                            "path": ["friends", "profile", ":userId"],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": "user_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get All Friendships (Admin Only)",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/friends/admin/all?page=1&limit=50",
+                            "host": ["{{base_url}}"],
+                            "path": ["friends", "admin", "all"],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "50"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Friendship Stats (Admin Only)",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/friends/admin/stats",
+                            "host": ["{{base_url}}"],
+                            "path": ["friends", "admin", "stats"]
+                        }
+                    }
+                },
+                {
+                    "name": "Admin Remove Friendship",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"userId1\": \"user_id_1\",\n  \"userId2\": \"user_id_2\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/friends/admin/remove",
+                            "host": ["{{base_url}}"],
+                            "path": ["friends", "admin", "remove"]
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

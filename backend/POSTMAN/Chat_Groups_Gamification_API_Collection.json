@@ -1,0 +1,465 @@
+{
+    "info": {
+        "name": "DevOverflow - Chat & Groups API",
+        "_postman_id": "chat-groups-collection-v2",
+        "description": "Complete Chat, Groups, and Gamification endpoints for DevOverflow backend",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:3000/api",
+            "type": "string"
+        },
+        {
+            "key": "jwt_token",
+            "value": "",
+            "type": "string"
+        }
+    ],
+    "item": [
+        {
+            "name": "Chat - All Protected",
+            "item": [
+                {
+                    "name": "Get Chat Sessions",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/chat/sessions",
+                            "host": ["{{base_url}}"],
+                            "path": ["chat", "sessions"]
+                        }
+                    }
+                },
+                {
+                    "name": "Create Chat Session",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"participants\": [\"user_id_1\", \"user_id_2\"],\n  \"type\": \"direct\",\n  \"title\": \"Discussion about React Hooks\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/chat/sessions",
+                            "host": ["{{base_url}}"],
+                            "path": ["chat", "sessions"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Chat Messages",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/chat/sessions/:sessionId/messages?page=1&limit=50",
+                            "host": ["{{base_url}}"],
+                            "path": ["chat", "sessions", ":sessionId", "messages"],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "50"
+                                }
+                            ],
+                            "variable": [
+                                {
+                                    "key": "sessionId",
+                                    "value": "session_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Send Chat Message",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"message\": \"Hey! I saw your answer about React Hooks. Could you help me understand useEffect dependencies better?\",\n  \"type\": \"text\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/chat/sessions/:sessionId/messages",
+                            "host": ["{{base_url}}"],
+                            "path": ["chat", "sessions", ":sessionId", "messages"],
+                            "variable": [
+                                {
+                                    "key": "sessionId",
+                                    "value": "session_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Chat Session",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/chat/sessions/:sessionId",
+                            "host": ["{{base_url}}"],
+                            "path": ["chat", "sessions", ":sessionId"],
+                            "variable": [
+                                {
+                                    "key": "sessionId",
+                                    "value": "session_id_here"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Groups - All Protected",
+            "item": [
+                {
+                    "name": "Get Groups",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/groups?page=1&limit=20&category=programming",
+                            "host": ["{{base_url}}"],
+                            "path": ["groups"],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "20"
+                                },
+                                {
+                                    "key": "category",
+                                    "value": "programming"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Create Group",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"React Developers\",\n  \"description\": \"A group for React developers to share knowledge, ask questions, and collaborate on projects\",\n  \"category\": \"programming\",\n  \"isPrivate\": false,\n  \"tags\": [\"react\", \"javascript\", \"frontend\"]\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/groups",
+                            "host": ["{{base_url}}"],
+                            "path": ["groups"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Group Details",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/groups/:groupId",
+                            "host": ["{{base_url}}"],
+                            "path": ["groups", ":groupId"],
+                            "variable": [
+                                {
+                                    "key": "groupId",
+                                    "value": "group_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Join Group",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/groups/:groupId/join",
+                            "host": ["{{base_url}}"],
+                            "path": ["groups", ":groupId", "join"],
+                            "variable": [
+                                {
+                                    "key": "groupId",
+                                    "value": "group_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Leave Group",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/groups/:groupId/leave",
+                            "host": ["{{base_url}}"],
+                            "path": ["groups", ":groupId", "leave"],
+                            "variable": [
+                                {
+                                    "key": "groupId",
+                                    "value": "group_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Post Group Question",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"title\": \"Best practices for React Context API\",\n  \"body\": \"I'm working on a large React application and considering using Context API for state management. What are the best practices and potential pitfalls?\",\n  \"tags\": [\"react\", \"context-api\", \"state-management\"]\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/groups/:groupId/questions",
+                            "host": ["{{base_url}}"],
+                            "path": ["groups", ":groupId", "questions"],
+                            "variable": [
+                                {
+                                    "key": "groupId",
+                                    "value": "group_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Group Questions",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/groups/:groupId/questions?page=1&limit=20&sortBy=createdAt",
+                            "host": ["{{base_url}}"],
+                            "path": ["groups", ":groupId", "questions"],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "20"
+                                },
+                                {
+                                    "key": "sortBy",
+                                    "value": "createdAt"
+                                }
+                            ],
+                            "variable": [
+                                {
+                                    "key": "groupId",
+                                    "value": "group_id_here"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Gamification - All Protected",
+            "item": [
+                {
+                    "name": "Get My Reputation",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/gamification/reputation",
+                            "host": ["{{base_url}}"],
+                            "path": ["gamification", "reputation"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Reputation History",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/gamification/reputation/history?page=1&limit=50",
+                            "host": ["{{base_url}}"],
+                            "path": ["gamification", "reputation", "history"],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "50"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get My Badges",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/gamification/badges",
+                            "host": ["{{base_url}}"],
+                            "path": ["gamification", "badges"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get My Privileges",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/gamification/privileges",
+                            "host": ["{{base_url}}"],
+                            "path": ["gamification", "privileges"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Gamification Leaderboard",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/gamification/leaderboard?limit=50&timeframe=month",
+                            "host": ["{{base_url}}"],
+                            "path": ["gamification", "leaderboard"],
+                            "query": [
+                                {
+                                    "key": "limit",
+                                    "value": "50"
+                                },
+                                {
+                                    "key": "timeframe",
+                                    "value": "month",
+                                    "description": "week, month, year, all-time"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

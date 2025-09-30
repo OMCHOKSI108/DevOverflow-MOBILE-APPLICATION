@@ -1,0 +1,431 @@
+{
+    "info": {
+        "name": "DevOverflow - Questions & Answers API",
+        "_postman_id": "qa-collection-v2",
+        "description": "Complete Questions and Answers endpoints for DevOverflow backend including CRUD operations, voting, and search",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:3000/api",
+            "type": "string"
+        },
+        {
+            "key": "jwt_token",
+            "value": "",
+            "type": "string"
+        }
+    ],
+    "item": [
+        {
+            "name": "Questions - Public Endpoints",
+            "item": [
+                {
+                    "name": "Get All Questions",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/questions?page=1&limit=10&sortBy=createdAt&order=desc&tags=javascript,react",
+                            "host": ["{{base_url}}"],
+                            "path": ["questions"],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "Page number for pagination"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "10",
+                                    "description": "Number of questions per page"
+                                },
+                                {
+                                    "key": "sortBy",
+                                    "value": "createdAt",
+                                    "description": "Sort by: createdAt, votes, answers"
+                                },
+                                {
+                                    "key": "order",
+                                    "value": "desc",
+                                    "description": "Sort order: asc or desc"
+                                },
+                                {
+                                    "key": "tags",
+                                    "value": "javascript,react",
+                                    "description": "Filter by tags (comma-separated)"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Search Questions",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/questions/search?q=react hooks&tags=react&sortBy=votes",
+                            "host": ["{{base_url}}"],
+                            "path": ["questions", "search"],
+                            "query": [
+                                {
+                                    "key": "q",
+                                    "value": "react hooks",
+                                    "description": "Search query"
+                                },
+                                {
+                                    "key": "tags",
+                                    "value": "react",
+                                    "description": "Filter by tags"
+                                },
+                                {
+                                    "key": "sortBy",
+                                    "value": "votes",
+                                    "description": "Sort by votes or createdAt"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Question by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/questions/:questionId",
+                            "host": ["{{base_url}}"],
+                            "path": ["questions", ":questionId"],
+                            "variable": [
+                                {
+                                    "key": "questionId",
+                                    "value": "question_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Questions by User",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/questions/user/:userId",
+                            "host": ["{{base_url}}"],
+                            "path": ["questions", "user", ":userId"],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": "user_id_here"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Questions - Protected Endpoints",
+            "item": [
+                {
+                    "name": "Create Question",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"title\": \"How to use React Hooks effectively?\",\n  \"body\": \"I'm new to React Hooks and want to understand the best practices for using useState and useEffect. Can someone provide examples and common patterns?\",\n  \"tags\": [\"react\", \"javascript\", \"hooks\", \"frontend\"]\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/questions",
+                            "host": ["{{base_url}}"],
+                            "path": ["questions"]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Question",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"title\": \"Updated: How to use React Hooks effectively?\",\n  \"body\": \"Updated question body with more specific details about React Hooks usage patterns.\",\n  \"tags\": [\"react\", \"javascript\", \"hooks\", \"frontend\", \"best-practices\"]\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/questions/:questionId",
+                            "host": ["{{base_url}}"],
+                            "path": ["questions", ":questionId"],
+                            "variable": [
+                                {
+                                    "key": "questionId",
+                                    "value": "question_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Question",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/questions/:questionId",
+                            "host": ["{{base_url}}"],
+                            "path": ["questions", ":questionId"],
+                            "variable": [
+                                {
+                                    "key": "questionId",
+                                    "value": "question_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Vote on Question",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"voteType\": \"upvote\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/questions/:questionId/vote",
+                            "host": ["{{base_url}}"],
+                            "path": ["questions", ":questionId", "vote"],
+                            "variable": [
+                                {
+                                    "key": "questionId",
+                                    "value": "question_id_here"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Answers - Public Endpoints",
+            "item": [
+                {
+                    "name": "Get Answers by Question",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/answers/question/:questionId",
+                            "host": ["{{base_url}}"],
+                            "path": ["answers", "question", ":questionId"],
+                            "variable": [
+                                {
+                                    "key": "questionId",
+                                    "value": "question_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Answers by User",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/answers/user/:userId",
+                            "host": ["{{base_url}}"],
+                            "path": ["answers", "user", ":userId"],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": "user_id_here"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Answers - Protected Endpoints",
+            "item": [
+                {
+                    "name": "Create Answer",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"body\": \"Here's a comprehensive answer about React Hooks: useState is used for local component state, and useEffect is used for side effects like API calls. Here are some best practices:\\n\\n1. Always use the dependency array in useEffect\\n2. Use custom hooks to reuse stateful logic\\n3. Keep state updates simple and predictable\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/questions/:questionId/answers",
+                            "host": ["{{base_url}}"],
+                            "path": ["questions", ":questionId", "answers"],
+                            "variable": [
+                                {
+                                    "key": "questionId",
+                                    "value": "question_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Answer",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"body\": \"Updated answer with more detailed examples and code snippets about React Hooks usage.\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/answers/:answerId",
+                            "host": ["{{base_url}}"],
+                            "path": ["answers", ":answerId"],
+                            "variable": [
+                                {
+                                    "key": "answerId",
+                                    "value": "answer_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Answer",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/answers/:answerId",
+                            "host": ["{{base_url}}"],
+                            "path": ["answers", ":answerId"],
+                            "variable": [
+                                {
+                                    "key": "answerId",
+                                    "value": "answer_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Vote on Answer",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"voteType\": \"upvote\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/answers/:answerId/vote",
+                            "host": ["{{base_url}}"],
+                            "path": ["answers", ":answerId", "vote"],
+                            "variable": [
+                                {
+                                    "key": "answerId",
+                                    "value": "answer_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Accept Answer",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/answers/:answerId/accept",
+                            "host": ["{{base_url}}"],
+                            "path": ["answers", ":answerId", "accept"],
+                            "variable": [
+                                {
+                                    "key": "answerId",
+                                    "value": "answer_id_here"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

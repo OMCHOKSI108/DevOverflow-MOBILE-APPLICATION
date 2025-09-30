@@ -1,0 +1,589 @@
+{
+    "info": {
+        "name": "DevOverflow - Admin API",
+        "_postman_id": "admin-collection-v2",
+        "description": "Complete Admin endpoints for DevOverflow backend including user management, content moderation, and reporting",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:3000/api",
+            "type": "string"
+        },
+        {
+            "key": "jwt_token",
+            "value": "",
+            "type": "string"
+        }
+    ],
+    "item": [
+        {
+            "name": "Reports - Public Create, Admin Manage",
+            "item": [
+                {
+                    "name": "Create Report (Protected - Any User)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"contentType\": \"question\",\n  \"contentId\": \"question_id_here\",\n  \"reason\": \"spam\",\n  \"description\": \"This question appears to be spam content with no meaningful programming question\",\n  \"category\": \"content_violation\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/admin/reports",
+                            "host": ["{{base_url}}"],
+                            "path": ["admin", "reports"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get All Reports (Admin Only)",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/admin/reports?status=pending&page=1&limit=50&contentType=question",
+                            "host": ["{{base_url}}"],
+                            "path": ["admin", "reports"],
+                            "query": [
+                                {
+                                    "key": "status",
+                                    "value": "pending",
+                                    "description": "Filter by status: pending, resolved, dismissed"
+                                },
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "50"
+                                },
+                                {
+                                    "key": "contentType",
+                                    "value": "question",
+                                    "description": "Filter by content type: question, answer, comment"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Resolve Report (Admin Only)",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"resolution\": \"resolved\",\n  \"action\": \"content_removed\",\n  \"adminNotes\": \"Content violated community guidelines and has been removed\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/admin/reports/:reportId/resolve",
+                            "host": ["{{base_url}}"],
+                            "path": ["admin", "reports", ":reportId", "resolve"],
+                            "variable": [
+                                {
+                                    "key": "reportId",
+                                    "value": "report_id_here"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Admin Stats & Overview",
+            "item": [
+                {
+                    "name": "Get Admin Statistics",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/admin/stats?timeframe=month",
+                            "host": ["{{base_url}}"],
+                            "path": ["admin", "stats"],
+                            "query": [
+                                {
+                                    "key": "timeframe",
+                                    "value": "month",
+                                    "description": "Statistics timeframe: day, week, month, year"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "User Management (Admin Only)",
+            "item": [
+                {
+                    "name": "Get All Users",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/admin/users?page=1&limit=50&search=john&status=active&sortBy=createdAt",
+                            "host": ["{{base_url}}"],
+                            "path": ["admin", "users"],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "50"
+                                },
+                                {
+                                    "key": "search",
+                                    "value": "john",
+                                    "description": "Search by name or email"
+                                },
+                                {
+                                    "key": "status",
+                                    "value": "active",
+                                    "description": "Filter by status: active, suspended, banned"
+                                },
+                                {
+                                    "key": "sortBy",
+                                    "value": "createdAt",
+                                    "description": "Sort by: createdAt, lastLogin, reputation"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Manage User (Suspend/Ban/Activate)",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"action\": \"suspend\",\n  \"reason\": \"Violation of community guidelines\",\n  \"duration\": \"7d\",\n  \"adminNotes\": \"User posted inappropriate content multiple times\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/admin/users/:userId",
+                            "host": ["{{base_url}}"],
+                            "path": ["admin", "users", ":userId"],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": "user_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete User",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/admin/users/:userId",
+                            "host": ["{{base_url}}"],
+                            "path": ["admin", "users", ":userId"],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": "user_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update User Details",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Updated Name\",\n  \"email\": \"updated@email.com\",\n  \"role\": \"moderator\",\n  \"reputation\": 1500,\n  \"isVerified\": true,\n  \"adminNotes\": \"Promoted to moderator due to excellent contributions\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/admin/users/:userId/details",
+                            "host": ["{{base_url}}"],
+                            "path": ["admin", "users", ":userId", "details"],
+                            "variable": [
+                                {
+                                    "key": "userId",
+                                    "value": "user_id_here"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Content Management - Questions",
+            "item": [
+                {
+                    "name": "Get All Questions (Admin View)",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/admin/questions?page=1&limit=50&status=active&flagged=true&sortBy=createdAt",
+                            "host": ["{{base_url}}"],
+                            "path": ["admin", "questions"],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "50"
+                                },
+                                {
+                                    "key": "status",
+                                    "value": "active",
+                                    "description": "Filter by status: active, hidden, deleted"
+                                },
+                                {
+                                    "key": "flagged",
+                                    "value": "true",
+                                    "description": "Show only flagged content"
+                                },
+                                {
+                                    "key": "sortBy",
+                                    "value": "createdAt"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Edit Question as Admin",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"title\": \"[EDITED] Corrected Question Title\",\n  \"body\": \"Updated question body with proper formatting and clear requirements\",\n  \"tags\": [\"javascript\", \"react\", \"hooks\"],\n  \"adminEdit\": true,\n  \"editReason\": \"Improved clarity and formatting\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/admin/questions/:questionId",
+                            "host": ["{{base_url}}"],
+                            "path": ["admin", "questions", ":questionId"],
+                            "variable": [
+                                {
+                                    "key": "questionId",
+                                    "value": "question_id_here"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Content Management - Answers",
+            "item": [
+                {
+                    "name": "Get All Answers (Admin View)",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/admin/answers?page=1&limit=50&status=active&flagged=true",
+                            "host": ["{{base_url}}"],
+                            "path": ["admin", "answers"],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "50"
+                                },
+                                {
+                                    "key": "status",
+                                    "value": "active"
+                                },
+                                {
+                                    "key": "flagged",
+                                    "value": "true"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Edit Answer as Admin",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"body\": \"Updated answer with corrected code examples and better explanations\",\n  \"adminEdit\": true,\n  \"editReason\": \"Fixed code syntax and improved clarity\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/admin/answers/:answerId",
+                            "host": ["{{base_url}}"],
+                            "path": ["admin", "answers", ":answerId"],
+                            "variable": [
+                                {
+                                    "key": "answerId",
+                                    "value": "answer_id_here"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Content Management - Comments",
+            "item": [
+                {
+                    "name": "Get All Comments (Admin View)",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/admin/comments?page=1&limit=50&flagged=true",
+                            "host": ["{{base_url}}"],
+                            "path": ["admin", "comments"],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "50"
+                                },
+                                {
+                                    "key": "flagged",
+                                    "value": "true"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Add Comment as Admin",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"body\": \"[ADMIN NOTE] This content has been reviewed and approved by moderation team\",\n  \"targetType\": \"question\",\n  \"targetId\": \"question_id_here\",\n  \"isAdminComment\": true\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/admin/comments",
+                            "host": ["{{base_url}}"],
+                            "path": ["admin", "comments"]
+                        }
+                    }
+                },
+                {
+                    "name": "Edit Comment as Admin",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"body\": \"[EDITED] Updated comment with appropriate language and content\",\n  \"adminEdit\": true,\n  \"editReason\": \"Removed inappropriate language\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/admin/comments/:commentId",
+                            "host": ["{{base_url}}"],
+                            "path": ["admin", "comments", ":commentId"],
+                            "variable": [
+                                {
+                                    "key": "commentId",
+                                    "value": "comment_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Comment as Admin",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/admin/comments/:commentId",
+                            "host": ["{{base_url}}"],
+                            "path": ["admin", "comments", ":commentId"],
+                            "variable": [
+                                {
+                                    "key": "commentId",
+                                    "value": "comment_id_here"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Content Deletion",
+            "item": [
+                {
+                    "name": "Delete Content as Admin",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/admin/content/:contentType/:contentId?reason=spam&hardDelete=false",
+                            "host": ["{{base_url}}"],
+                            "path": ["admin", "content", ":contentType", ":contentId"],
+                            "query": [
+                                {
+                                    "key": "reason",
+                                    "value": "spam",
+                                    "description": "Reason for deletion"
+                                },
+                                {
+                                    "key": "hardDelete",
+                                    "value": "false",
+                                    "description": "Whether to permanently delete (true) or soft delete (false)"
+                                }
+                            ],
+                            "variable": [
+                                {
+                                    "key": "contentType",
+                                    "value": "question",
+                                    "description": "Content type: question, answer, comment"
+                                },
+                                {
+                                    "key": "contentId",
+                                    "value": "content_id_here"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

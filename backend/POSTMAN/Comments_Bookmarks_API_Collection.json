@@ -1,0 +1,335 @@
+{
+    "info": {
+        "name": "DevOverflow - Comments & Bookmarks API",
+        "_postman_id": "comments-bookmarks-collection-v2",
+        "description": "Complete Comments and Bookmarks endpoints for DevOverflow backend",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:3000/api",
+            "type": "string"
+        },
+        {
+            "key": "jwt_token",
+            "value": "",
+            "type": "string"
+        }
+    ],
+    "item": [
+        {
+            "name": "Comments - Public Endpoints",
+            "item": [
+                {
+                    "name": "Get Question Comments",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/comments/question/:questionId",
+                            "host": ["{{base_url}}"],
+                            "path": ["comments", "question", ":questionId"],
+                            "variable": [
+                                {
+                                    "key": "questionId",
+                                    "value": "question_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Answer Comments",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/comments/answer/:answerId",
+                            "host": ["{{base_url}}"],
+                            "path": ["comments", "answer", ":answerId"],
+                            "variable": [
+                                {
+                                    "key": "answerId",
+                                    "value": "answer_id_here"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Comments - Protected Endpoints",
+            "item": [
+                {
+                    "name": "Add Comment to Question",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"body\": \"This is a helpful comment on the question. Consider adding more specific examples to clarify your requirements.\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/comments/question/:questionId",
+                            "host": ["{{base_url}}"],
+                            "path": ["comments", "question", ":questionId"],
+                            "variable": [
+                                {
+                                    "key": "questionId",
+                                    "value": "question_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Add Comment to Answer",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"body\": \"Great answer! This solution worked perfectly for my use case. Thanks for the detailed explanation.\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/comments/answer/:answerId",
+                            "host": ["{{base_url}}"],
+                            "path": ["comments", "answer", ":answerId"],
+                            "variable": [
+                                {
+                                    "key": "answerId",
+                                    "value": "answer_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Comment",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"body\": \"Updated comment text with additional information and corrections.\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/comments/:commentId",
+                            "host": ["{{base_url}}"],
+                            "path": ["comments", ":commentId"],
+                            "variable": [
+                                {
+                                    "key": "commentId",
+                                    "value": "comment_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Comment",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/comments/:commentId",
+                            "host": ["{{base_url}}"],
+                            "path": ["comments", ":commentId"],
+                            "variable": [
+                                {
+                                    "key": "commentId",
+                                    "value": "comment_id_here"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Bookmarks - All Protected",
+            "item": [
+                {
+                    "name": "Get My Bookmarks",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/bookmarks?page=1&limit=20",
+                            "host": ["{{base_url}}"],
+                            "path": ["bookmarks"],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "Page number for pagination"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "20",
+                                    "description": "Number of bookmarks per page"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Add Bookmark",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"questionId\": \"question_id_here\",\n  \"note\": \"Bookmarked this question for future reference - contains great React Hooks examples\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/bookmarks",
+                            "host": ["{{base_url}}"],
+                            "path": ["bookmarks"]
+                        }
+                    }
+                },
+                {
+                    "name": "Remove Bookmark",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/bookmarks/:bookmarkId",
+                            "host": ["{{base_url}}"],
+                            "path": ["bookmarks", ":bookmarkId"],
+                            "variable": [
+                                {
+                                    "key": "bookmarkId",
+                                    "value": "bookmark_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Add Question Bookmark (Legacy)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/bookmarks/question/:questionId",
+                            "host": ["{{base_url}}"],
+                            "path": ["bookmarks", "question", ":questionId"],
+                            "variable": [
+                                {
+                                    "key": "questionId",
+                                    "value": "question_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Remove Question Bookmark (Legacy)",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/bookmarks/question/:questionId",
+                            "host": ["{{base_url}}"],
+                            "path": ["bookmarks", "question", ":questionId"],
+                            "variable": [
+                                {
+                                    "key": "questionId",
+                                    "value": "question_id_here"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Check if Question is Bookmarked",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwt_token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/bookmarks/check/:questionId",
+                            "host": ["{{base_url}}"],
+                            "path": ["bookmarks", "check", ":questionId"],
+                            "variable": [
+                                {
+                                    "key": "questionId",
+                                    "value": "question_id_here"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
